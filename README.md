@@ -1,72 +1,37 @@
-# Prueba Técnica – Procesamiento de Ventas
+# Prueba tecnica - Procesamiento de ventas
 
-Solución a la prueba técnica de desarrollador. Script en Python que carga un archivo Excel de ventas, procesa los datos con `pandas` y genera un archivo de resumen con múltiples hojas.
+Script en Python que lee un archivo Excel con datos de ventas, hace la limpieza y las agrupaciones pedidas, y genera un archivo de salida con los resumenes.
 
-## 📁 Estructura del proyecto
+## Estructura
 
 ```
-.
-├── data/
-│   └── datos_ventas.xlsx        # Archivo de entrada
-├── output/
-│   └── resumen_ventas.xlsx      # Archivo generado
-├── procesar_ventas.py           # Script principal
-├── formato_excel.py             # Aplica formato profesional al Excel de salida
-├── requirements.txt             # Dependencias
-├── .gitignore
-└── README.md
+data/                  archivo de entrada
+output/                archivo generado
+procesar_ventas.py     script principal
+formato_excel.py       aplica formato al Excel de salida
+requirements.txt       dependencias
 ```
 
-## ⚙️ Requisitos
-
-- Python 3.10+
-- Dependencias en `requirements.txt`
-
-## 🚀 Ejecución
+## Como ejecutar
 
 ```bash
-# 1. Crear entorno virtual (recomendado)
-python -m venv .venv
-source .venv/bin/activate        # Linux/Mac
-.venv\Scripts\activate           # Windows
-
-# 2. Instalar dependencias
 pip install -r requirements.txt
-
-# 3. Ejecutar
 python procesar_ventas.py
-python formato_excel.py          # Opcional: aplica formato al Excel de salida
+python formato_excel.py
 ```
 
-## 🔎 Lógica del procesamiento
+## Que hace el script
 
-| Paso | Acción |
-|------|--------|
-| 1 | Carga de `datos_ventas.xlsx` en un DataFrame de pandas. |
-| 2 | Imputación de `Total_Venta` faltantes usando `Cantidad * Precio_Unitario`. |
-| 3 | Conversión de `Fecha` a `datetime`. |
-| 4 | Filtrado de ventas del año 2023. |
-| 5 | Creación de la columna `Mes` (numérico). |
-| 6 | Cálculo de totales por vendedor y por mes. |
-| 7 | Exportación a `output/resumen_ventas.xlsx`. |
+1. Carga `data/datos_ventas.xlsx` con pandas.
+2. Rellena los valores faltantes de `Total_Venta` con `Cantidad * Precio_Unitario`.
+3. Convierte la columna `Fecha` a datetime.
+4. Filtra los registros del anio 2023.
+5. Agrega una columna `Mes` con el mes numerico.
+6. Calcula el total de ventas por vendedor y por mes.
+7. Exporta el resultado a `output/resumen_ventas.xlsx`.
 
-## 📊 Salida
+## Hojas del archivo de salida
 
-El archivo `resumen_ventas.xlsx` contiene tres hojas:
-
-| Hoja | Contenido |
-|------|-----------|
-| `Resumen_Ventas` | Total de ventas por vendedor. |
-| `Ventas_Mensuales` | Total de ventas por mes. |
-| `Vendedor_x_Mes` | Cruce vendedor × mes (hoja adicional de valor). |
-
-## 🧠 Decisiones técnicas
-
-- **Imputación con `fillna(Cantidad * Precio_Unitario)`**: no sobrescribe valores existentes; solo rellena `NaN`.
-- **Filtro explícito por año**: aunque el insumo actual está 100 % en 2023, se conserva el filtro para robustez ante insumos futuros.
-- **Función por paso**: separar cada etapa en una función facilita test unitarios y reutilización.
-- **Hoja adicional `Vendedor_x_Mes`**: no la pide el enunciado, pero es el cruce más útil para lectura ejecutiva. Se marca como opcional en el README.
-
-## 👤 Autor
-
-Santiago González Medina
+- `Resumen_Ventas`: total por vendedor.
+- `Ventas_Mensuales`: total por mes.
+- `Vendedor_x_Mes`: cruce vendedor x mes.
